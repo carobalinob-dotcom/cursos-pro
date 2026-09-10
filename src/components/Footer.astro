@@ -1,0 +1,25 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white border-t border-slate-200 mt-auto">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    
+    <!-- Derechos de autor a la izquierda -->
+    <p class="text-slate-500 text-sm font-medium">
+      &copy; {currentYear} Todos los derechos reservados.
+    </p>
+    
+    <!-- Redes sociales a la derecha -->
+    <div class="flex items-center gap-6">
+      <a href="#" class="text-sm font-medium text-slate-400 hover:text-indigo-600 transition-colors">Instagram</a>
+      
+      <!-- Enlace directo a WhatsApp -->
+      <a href="https://wa.me/593990000000" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-green-500 transition-colors">
+        WhatsApp: +593 99 000 0000
+      </a>
+    </div>
+    
+  </div>
+</footer>

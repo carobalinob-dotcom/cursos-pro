@@ -1,11 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Inicio - Nuestro Negocio">
+  <main class="max-w-6xl mx-auto px-6 py-20 flex flex-col items-center text-center">
+    
+    <!-- Insignia (Badge) de bienvenida -->
+    <span class="bg-indigo-100 text-indigo-800 text-sm font-bold px-4 py-1.5 rounded-full mb-6">
+      Bienvenidos a nuestro espacio
+    </span>
+
+    <!-- Título principal -->
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-slate-900">
+      Transformando la forma <br class="hidden md:block" /> de aprender.
+    </h1>
+    
+    <!-- Resumen del negocio -->
+    <p class="text-xl text-slate-600 max-w-3xl mb-10 leading-relaxed">
+      Somos un centro de formación dedicado a impulsar el desarrollo profesional. Ofrecemos talleres prácticos, metodologías modernas y un ambiente diseñado para que alcances tu máximo potencial.
+    </p>
+    
+    <!-- Botón Call to Action -->
+    <a href="/talleres" class="bg-slate-900 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 mb-16">
+      Ver Talleres Disponibles
+    </a>
+
+    <!-- Imagen representativa -->
+    <div class="w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl relative">
+      <img 
+        src="https://placehold.co/1200x600/1e293b/ffffff?text=Fotograf%C3%ADa+del+Negocio" 
+        alt="Instalaciones o ambiente del negocio" 
+        class="w-full h-auto object-cover"
+      />
+    </div>
+
+  </main>
 </Layout>

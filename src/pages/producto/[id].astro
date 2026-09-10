@@ -1,0 +1,100 @@
+---
+// src/pages/producto/[id].astro
+import products from '../../data/mockProducts.json';
+import Navbar from '../../components/Navbar.astro';
+
+// Generamos las rutas para cada producto del JSON
+export function getStaticPaths() {
+  return products.map((product) => {
+    return {
+      params: { id: product.id },
+      props: { product },
+    };
+  });
+}
+
+const { product } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{product.name} - Tienda Oficial</title>
+  </head>
+  <body class="bg-white min-h-screen text-slate-900 font-sans">
+    
+    <Navbar />
+
+    <main class="max-w-6xl mx-auto px-6 py-12 md:py-20">
+      
+      <!-- Botón de regreso -->
+      <a href="/productos" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Volver a la tienda
+      </a>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
+        
+        <!-- Columna Izquierda: Imagen del Producto -->
+        <div class="relative bg-slate-100 rounded-3xl overflow-hidden shadow-sm border border-slate-200">
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            class="w-full h-auto object-cover aspect-[4/5]"
+          />
+          {product.isNew && (
+            <span class="absolute top-6 left-6 bg-indigo-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md tracking-wider">
+              NUEVO
+            </span>
+          )}
+        </div>
+
+        <!-- Columna Derecha: Detalles e Interacción -->
+        <div class="flex flex-col h-full justify-center">
+          
+          <span class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 block">
+            {product.category}
+          </span>
+          
+          <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4 leading-tight">
+            {product.name}
+          </h1>
+          
+          <p class="text-3xl font-light text-slate-900 mb-8">
+            ${product.price.toFixed(2)}
+          </p>
+          
+          <!-- Descripción simulada (puedes agregarla al JSON luego) -->
+          <p class="text-slate-600 leading-relaxed mb-10">
+            Diseñado con los más altos estándares de calidad. Este artículo es ideal para acompañarte en tu día a día, ofreciendo durabilidad, confort y un estilo minimalista que se adapta a cualquier entorno profesional.
+          </p>
+
+          <hr class="border-slate-100 mb-10" />
+
+          <!-- Botón de compra (Visual) -->
+          <button class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1">
+            Agregar al carrito
+          </button>
+          
+          <!-- Beneficios extra -->
+          <ul class="mt-8 space-y-3 text-sm text-slate-500 font-medium">
+            <li class="flex items-center">
+              <svg class="h-5 w-5 mr-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Envío disponible a nivel nacional
+            </li>
+            <li class="flex items-center">
+              <svg class="h-5 w-5 mr-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Garantía de calidad garantizada
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </main>
+
+  </body>
+</html>

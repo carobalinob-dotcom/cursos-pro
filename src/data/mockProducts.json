@@ -1,0 +1,34 @@
+[
+  {
+    "id": "prod-01",
+    "name": "Camiseta Oversize Básica",
+    "category": "Ropa",
+    "price": 25.00,
+    "image": "https://placehold.co/600x800/e2e8f0/1e293b?text=Camiseta+Oversize",
+    "isNew": true
+  },
+  {
+    "id": "prod-02",
+    "name": "Taza de Cerámica Mate",
+    "category": "Accesorios",
+    "price": 15.00,
+    "image": "https://placehold.co/600x800/e2e8f0/1e293b?text=Taza+Ceramica",
+    "isNew": false
+  },
+  {
+    "id": "prod-03",
+    "name": "Libreta de Apuntes Premium",
+    "category": "Papelería",
+    "price": 18.50,
+    "image": "https://placehold.co/600x800/e2e8f0/1e293b?text=Libreta+Premium",
+    "isNew": true
+  },
+  {
+    "id": "prod-04",
+    "name": "Totebag de Algodón",
+    "category": "Accesorios",
+    "price": 12.00,
+    "image": "https://placehold.co/600x800/e2e8f0/1e293b?text=Totebag",
+    "isNew": false
+  }
+]

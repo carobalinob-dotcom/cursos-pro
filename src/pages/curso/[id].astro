@@ -1,0 +1,72 @@
+---
+// src/pages/curso/[id].astro
+import mockCourses from '../../data/mockCourses.json';
+import Navbar from '../../components/Navbar.astro';
+
+// Esta función lee el JSON y le dice a Astro qué páginas debe generar
+export function getStaticPaths() {
+  return mockCourses.map((course) => {
+    return {
+      params: { id: course.id },
+      props: { course }, // Pasamos toda la información del curso como 'prop'
+    };
+  });
+}
+
+// Extraemos la información del curso actual
+const { course } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{course.title}</title>
+  </head>
+  <body class="bg-slate-50 min-h-screen text-slate-900 font-sans">
+    
+    <Navbar />
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+      <a href="/" class="text-indigo-600 hover:underline mb-6 inline-block font-medium">
+        &larr; Volver al catálogo
+      </a>
+      
+      <!-- Contenedor principal de los detalles -->
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
+        <div class="flex gap-2 mb-4">
+          <span class="bg-indigo-100 text-indigo-800 text-sm font-bold px-3 py-1 rounded-full">
+            {course.modality}
+          </span>
+          <span class="bg-slate-100 text-slate-700 text-sm font-semibold px-3 py-1 rounded-full">
+            {course.duration}
+          </span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 tracking-tight">
+          {course.title}
+        </h1>
+        
+        <img 
+          src={course.coverImage} 
+          alt={`Portada de ${course.title}`} 
+          class="w-full h-80 object-cover rounded-2xl mb-8 shadow-sm" 
+        />
+        
+        <p class="text-lg text-slate-600 leading-relaxed mb-8">
+          {course.shortDescription}
+        </p>
+        
+        <h2 class="text-2xl font-bold mb-4 text-slate-800">Tecnologías incluidas</h2>
+        <div class="flex flex-wrap gap-2">
+          {course.tags.map((tag) => (
+            <span class="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

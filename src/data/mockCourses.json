@@ -1,0 +1,29 @@
+[
+  {
+    "id": "curso-01",
+    "title": "Desarrollo Web Full Stack",
+    "shortDescription": "Domina el frontend y backend construyendo aplicaciones reales y escalables.",
+    "modality": "Online",
+    "duration": "120 horas",
+    "tags": ["Frontend", "Backend", "Astro"],
+    "coverImage": "https://placehold.co/800x400/1e293b/ffffff?text=Desarrollo+Full+Stack"
+  },
+  {
+    "id": "curso-02",
+    "title": "Administración de Redes y Servidores",
+    "shortDescription": "Aprende a configurar infraestructuras seguras, enrutamiento y despliegue en Linux.",
+    "modality": "Híbrido",
+    "duration": "80 horas",
+    "tags": ["Linux", "Redes", "Infraestructura"],
+    "coverImage": "https://placehold.co/800x400/0f172a/ffffff?text=Redes+y+Servidores"
+  },
+  {
+    "id": "curso-03",
+    "title": "Arquitectura de Bases de Datos",
+    "shortDescription": "Diseño, optimización y gestión de bases de datos relacionales y NoSQL.",
+    "modality": "Presencial",
+    "duration": "60 horas",
+    "tags": ["SQL", "PostgreSQL", "Diseño"],
+    "coverImage": "https://placehold.co/800x400/334155/ffffff?text=Bases+de+Datos"
+  }
+]
