@@ -7,26 +7,26 @@ import products from '../data/mockProducts.json';
   <main class="max-w-6xl mx-auto px-6 py-16">
     
     <header class="mb-14 text-center">
-      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-slate-900">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-[#2B2B2B]">
         Tienda Oficial
       </h1>
-      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+      <p class="text-lg text-[#A88C75] max-w-2xl mx-auto">
         Mercancía exclusiva y herramientas para tu desarrollo profesional.
       </p>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {products.map((product) => (
-        <a href={`/producto/${product.id}`} class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 flex flex-col group block">
+        <a href={`/producto/${product.id}`} class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#EADCD1] flex flex-col group block">
           
-          <div class="relative h-48 overflow-hidden bg-slate-200">
+          <div class="relative h-48 overflow-hidden bg-[#F7F3EF]">
             <img 
               src={product.image} 
               alt={product.name} 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             {product.isNew && (
-              <span class="absolute top-3 left-3 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+              <span class="absolute top-3 left-3 bg-[#A88C75] text-[#F7F3EF] text-xs font-bold px-3 py-1 rounded-full shadow-md tracking-widest uppercase">
                 NUEVO
               </span>
             )}
@@ -34,20 +34,20 @@ import products from '../data/mockProducts.json';
 
           <div class="p-6 flex flex-col flex-grow">
             <div class="flex gap-2 mb-3">
-              <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide">
+              <span class="bg-[#EADCD1] text-[#2B2B2B] text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide">
                 {product.category}
               </span>
             </div>
 
-            <h2 class="text-xl font-bold mb-2 leading-tight text-slate-800 flex-grow">
+            <h2 class="text-xl font-serif text-[#2B2B2B] mb-2 leading-tight flex-grow">
               {product.name}
             </h2>
             
-            <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
-              <span class="text-2xl font-extrabold text-slate-900">
+            <div class="mt-4 pt-4 border-t border-[#EADCD1] flex justify-between items-center">
+              <span class="text-2xl font-serif text-[#2B2B2B]">
                 ${product.price.toFixed(2)}
               </span>
-              <span class="text-sm font-medium text-indigo-600 group-hover:underline">
+              <span class="text-sm font-medium text-[#A88C75] group-hover:text-[#2B2B2B] transition-colors">
                 Ver detalles &rarr;
               </span>
             </div>

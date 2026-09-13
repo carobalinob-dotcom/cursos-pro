@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Datos de prueba: Aquí colocarás la información real de tus videos
+const mockTutorials = [
+  {
+    id: 1,
+    title: "Guía básica de diseño",
+    description: "Aprende los fundamentos para crear composiciones equilibradas y elegantes en tus proyectos diarios.",
+    image: "https://placehold.co/600x400/E2E8F0/2B2B2B?text=Guia+Basica",
+    facebookUrl: "https://facebook.com/"
+  },
+  {
+    id: 2,
+    title: "Técnicas de organización",
+    description: "Descubre cómo optimizar tu tiempo y espacio de trabajo con estos sencillos pasos aplicables de inmediato.",
+    image: "https://placehold.co/600x400/E2E8F0/2B2B2B?text=Organizacion",
+    facebookUrl: "https://facebook.com/"
+  },
+  {
+    id: 3,
+    title: "Herramientas esenciales",
+    description: "Un repaso rápido por los recursos y materiales que no pueden faltar en tu kit profesional.",
+    image: "https://placehold.co/600x400/E2E8F0/2B2B2B?text=Herramientas",
+    facebookUrl: "https://facebook.com/"
+  }
+];
+---
+
+<Layout title="Tutoriales - Rachel Studio">
+  <main class="max-w-6xl mx-auto px-6 py-16">
+    
+    <header class="mb-14 text-center">
+      <h1 class="text-4xl md:text-5xl font-serif tracking-tight mb-4 text-[#2B2B2B]">
+        Tutoriales
+      </h1>
+      <p class="text-lg text-[#A88C75] max-w-2xl mx-auto">
+        Aprende a tu propio ritmo con nuestras guías gratuitas en video.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {mockTutorials.map((tutorial) => (
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#EADCD1] flex flex-col group">
+          
+          <!-- Contenedor de imagen con Ícono de Play superpuesto -->
+          <div class="relative h-48 overflow-hidden bg-[#E2E8F0]">
+            <img 
+              src={tutorial.image} 
+              alt={`Miniatura de ${tutorial.title}`} 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <!-- Ícono de Play visual -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="bg-white/80 p-3 rounded-full shadow-md backdrop-blur-sm group-hover:bg-white transition-colors duration-300">
+                <svg class="w-8 h-8 text-[#A88C75] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-grow">
+            <!-- Título en Serif -->
+            <h2 class="text-xl font-serif text-[#2B2B2B] mb-3 leading-tight">
+              {tutorial.title}
+            </h2>
+            
+            <!-- Descripción -->
+            <p class="text-[#A88C75] text-sm mb-8 flex-grow leading-relaxed">
+              {tutorial.description}
+            </p>
+            
+            <!-- Enlace a Facebook -->
+            <div class="mt-auto pt-4 border-t border-[#EADCD1]">
+              <a href={tutorial.facebookUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-serif text-[#A88C75] hover:text-[#2B2B2B] transition-colors uppercase tracking-widest group-hover:underline">
+                <!-- Ícono de Facebook en vector -->
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                </svg>
+                Ver en Facebook &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>
