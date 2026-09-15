@@ -1,35 +1,51 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
+import { contentfulClient } from '../lib/contentful.js';
+
+// 1. Pedimos los datos del Home a Contentful
+const entries = await contentfulClient.getEntries({
+  content_type: 'home', 
+});
+
+// 2. Extraemos el primer (y único) elemento que el cliente haya publicado
+// Usamos el signo de interrogación (?) por si el cliente aún no ha publicado la información, para que la página no se rompa.
+const homeEntry = entries.items[0];
+
+const homeData = {
+  title: homeEntry?.fields?.titulo || 'Transformando la forma de aprender.',
+  description: homeEntry?.fields?.descripcion || 'Somos un centro de formación dedicado a impulsar el desarrollo profesional...',
+  // Contentful transforma "Foto Principal" a "fotoPrincipal" internamente
+  image: homeEntry?.fields?.fotoPrincipal?.fields?.file?.url || 'https://placehold.co/1200x600/e2e8f0/1e293b?text=Fotograf%C3%ADa+del+Negocio'
+};
 ---
 
-<Layout title="Inicio - Nuestro Negocio">
+<Layout title="Inicio - Rachel Studio">
   <main class="max-w-6xl mx-auto px-6 py-20 flex flex-col items-center text-center">
 
-    <!-- Imagen representativa -->
+    <!-- Imagen representativa conectada a Contentful -->
     <div class="w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl relative mb-16">
       <img 
-        src="https://placehold.co/1200x600/e2e8f0/1e293b?text=Fotograf%C3%ADa+del+Negocio" 
+        src={homeData.image} 
         alt="Instalaciones o ambiente del negocio" 
-        class="w-full h-auto object-cover"
+        class="w-full h-auto object-cover max-h-[600px]"
       />
     </div>
 
-    <!-- Título principal Elegante -->
+    <!-- Título principal -->
     <h1 class="text-4xl md:text-6xl font-serif text-[#2B2B2B] leading-tight mb-6">
-      Transformando la forma <br class="hidden md:block" /> de <span class="italic text-[#A88C75]">aprender.</span>
+      {homeData.title}
     </h1>
     
     <!-- Resumen del negocio -->
-    <p class="text-xl text-stone-600 max-w-3xl mb-10 leading-relaxed">
-      Somos un centro de formación dedicado a impulsar el desarrollo profesional. Ofrecemos talleres prácticos, metodologías modernas y un ambiente diseñado para que alcances tu máximo potencial.
+    <p class="text-xl text-stone-600 max-w-3xl mb-10 leading-relaxed whitespace-pre-line">
+      {homeData.description}
     </p>
     
     <!-- Botón Call to Action Elegante -->
-    <a href="/talleres" class="inline-block bg-[#A88C75] text-[#F7F3EF] px-10 py-4 font-serif text-lg tracking-widest uppercase hover:bg-[#2B2B2B] transition-colors duration-300 mb-16">
+    <a href="/talleres" class="inline-block bg-[#A88C75] text-[#F7F3EF] px-10 py-4 font-serif text-lg tracking-widest uppercase hover:bg-[#2B2B2B] transition-colors duration-300 mb-16 shadow-md rounded-xl">
       Ver Talleres Disponibles
     </a>
     
-
   </main>
 </Layout>

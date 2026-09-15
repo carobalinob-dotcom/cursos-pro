@@ -1,14 +1,29 @@
 ---
 // src/pages/curso/[id].astro
-import mockCourses from '../../data/mockCourses.json';
 import Navbar from '../../components/Navbar.astro';
+import { contentfulClient } from '../../lib/contentful.js';
 
-// Esta función lee el JSON y le dice a Astro qué páginas debe generar
-export function getStaticPaths() {
-  return mockCourses.map((course) => {
+// Esta función lee Contentful y le dice a Astro qué páginas debe generar
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries({
+    content_type: 'talleres', 
+  });
+
+  return entries.items.map((item) => {
     return {
-      params: { id: course.id },
-      props: { course }, // Pasamos toda la información del curso como 'prop'
+      params: { id: item.fields.slug },
+      props: { 
+        course: {
+          id: item.fields.slug,
+          title: item.fields.nombre,
+          modality: item.fields.modalidad || 'Por definir',
+          duration: item.fields.duracionHoras ? `${item.fields.duracionHoras} Horas` : 'N/A',
+          shortDescription: item.fields.descripcion || 'Sin descripción disponible.',
+          coverImage: item.fields.imagen?.fields?.file?.url || '',
+          tags: item.fields.temas ? item.fields.temas.split(',').map(tag => tag.trim()) : [],
+          whatsapp: item.fields.enlace || '#'
+        }
+      },
     };
   });
 }
@@ -54,18 +69,27 @@ const { course } = Astro.props;
           class="w-full h-80 object-cover rounded-2xl mb-8 shadow-sm" 
         />
         
-        <p class="text-lg text-[#A88C75] leading-relaxed mb-10">
+        <!-- Agregamos whitespace-pre-line para respetar los párrafos creados en Contentful -->
+        <p class="text-lg text-[#A88C75] leading-relaxed mb-10 whitespace-pre-line">
           {course.shortDescription}
         </p>
         
-        <h2 class="text-2xl font-serif mb-6 text-[#2B2B2B]">Tecnologías incluidas</h2>
-        <div class="flex flex-wrap gap-3">
+        <h2 class="text-2xl font-serif mb-6 text-[#2B2B2B]">Temas a tratar</h2>
+        <div class="flex flex-wrap gap-3 mb-10">
           {course.tags.map((tag) => (
             <span class="bg-white border border-[#EADCD1] text-[#A88C75] px-4 py-2 rounded-lg text-sm font-medium">
               {tag}
             </span>
           ))}
         </div>
+
+        <hr class="border-[#EADCD1] mb-8" />
+
+        <!-- Botón de inscripción conectado al enlace de Contentful -->
+        <a href={course.whatsapp} target="_blank" rel="noopener noreferrer" class="w-full block text-center bg-[#2B2B2B] hover:bg-[#A88C75] text-[#F7F3EF] font-serif text-lg tracking-widest uppercase py-4 px-8 rounded-xl transition-colors duration-300 shadow-md">
+          Inscribirme por WhatsApp
+        </a>
+
       </div>
     </main>
   </body>

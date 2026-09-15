@@ -1,14 +1,29 @@
 ---
 // src/pages/producto/[id].astro
-import products from '../../data/mockProducts.json';
 import Navbar from '../../components/Navbar.astro';
+import { contentfulClient } from '../../lib/contentful.js';
 
-// Generamos las rutas para cada producto del JSON
-export function getStaticPaths() {
-  return products.map((product) => {
+// Generamos las rutas dinámicas consultando a Contentful
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries({
+    content_type: 'productos', 
+  });
+
+  return entries.items.map((item) => {
     return {
-      params: { id: product.id },
-      props: { product },
+      params: { id: item.fields.slug },
+      props: { 
+        product: {
+          id: item.fields.slug,
+          name: item.fields.nombre,
+          price: item.fields.precio || 0,
+          category: item.fields.categoria,
+          isNew: item.fields.nuevo,
+          image: item.fields.imagen?.fields?.file?.url || '',
+          description: item.fields.descripcion || 'Sin descripción disponible.',
+          whatsapp: item.fields.enlace || '#'
+        }
+      },
     };
   });
 }
@@ -68,17 +83,17 @@ const { product } = Astro.props;
             ${product.price.toFixed(2)}
           </p>
           
-          <!-- Descripción simulada (puedes agregarla al JSON luego) -->
-          <p class="text-[#A88C75] leading-relaxed mb-10 text-lg">
-            Diseñado con los más altos estándares de calidad. Este artículo es ideal para acompañarte en tu día a día, ofreciendo durabilidad, confort y un estilo minimalista que se adapta a cualquier entorno profesional.
+          <!-- Descripción Real conectada a Contentful -->
+          <p class="text-[#A88C75] leading-relaxed mb-10 text-lg whitespace-pre-line">
+            {product.description}
           </p>
 
           <hr class="border-[#EADCD1] mb-10" />
 
-          <!-- Botón de compra (Visual) -->
-          <button class="w-full bg-[#A88C75] hover:bg-[#2B2B2B] text-[#F7F3EF] font-serif text-lg tracking-widest uppercasse py-4 px-8 transition-colors duration-300 shadow-md">
-            Agregar al carrito
-          </button>
+          <!-- Botón de compra (Conectado a WhatsApp) -->
+          <a href={product.whatsapp} target="_blank" rel="noopener noreferrer" class="w-full block text-center bg-[#A88C75] hover:bg-[#2B2B2B] text-[#F7F3EF] font-serif text-lg tracking-widest uppercase py-4 px-8 transition-colors duration-300 shadow-md">
+            Comprar por WhatsApp
+          </a>
           
           <!-- Beneficios extra -->
           <ul class="mt-8 space-y-3 text-sm text-[#A88C75] font-medium">

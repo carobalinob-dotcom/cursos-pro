@@ -1,6 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import courses from '../data/mockCourses.json';
+import { contentfulClient } from '../lib/contentful.js';
+
+// 1. Pedimos los talleres a Contentful
+const entries = await contentfulClient.getEntries({
+  content_type: 'talleres', // Tu Copy ID
+});
+
+// 2. Mapeamos los datos para adaptarlos a tus tarjetas
+const courses = entries.items.map((item) => {
+  return {
+    id: item.fields.slug,
+    title: item.fields.nombre,
+    modality: item.fields.modalidad || 'Por definir',
+    // Le agregamos la palabra "Horas" al número que ponga el cliente
+    duration: item.fields.duracionHoras ? `${item.fields.duracionHoras} Horas` : 'N/A', 
+    shortDescription: item.fields.descripcion || '',
+    coverImage: item.fields.imagen?.fields?.file?.url || '',
+    // Truco: Convertimos el texto "Tema1, Tema2" en una lista real separando por comas
+    tags: item.fields.temas ? item.fields.temas.split(',').map(tag => tag.trim()) : [],
+  };
+});
 ---
 
 <Layout title="Talleres Disponibles">
@@ -46,7 +66,7 @@ import courses from '../data/mockCourses.json';
             </h2>
             
             <!-- Descripción en tono café claro -->
-            <p class="text-[#A88C75] text-sm mb-6 flex-grow">
+            <p class="text-[#A88C75] text-sm mb-6 flex-grow line-clamp-3">
               {course.shortDescription}
             </p>
             

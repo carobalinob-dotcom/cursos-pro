@@ -1,6 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import products from '../data/mockProducts.json';
+import { contentfulClient } from '../lib/contentful.js';
+
+// 1. Pedimos los productos a Contentful
+const entries = await contentfulClient.getEntries({
+  content_type: 'productos', // Este debe ser el ID de tu modelo en Contentful
+});
+
+// 2. Mapeamos los datos crudos para que tu diseño los entienda igual que el JSON
+const products = entries.items.map((item) => {
+  return {
+    id: item.fields.slug, 
+    name: item.fields.nombre,
+    price: item.fields.precio || 0, // Ponemos un 0 por defecto por si olvidan poner precio
+    category: item.fields.categoria,
+    isNew: item.fields.nuevo,
+    // Contentful guarda la imagen en esta ruta, así que la extraemos:
+    image: item.fields.imagen?.fields?.file?.url || '', 
+  };
+});
 ---
 
 <Layout title="Tienda - Nuestros Productos">
